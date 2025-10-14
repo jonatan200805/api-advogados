@@ -267,13 +267,3 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 ```
-
----
-
-Se você quiser, posso agora:
-- ✅ **Adicionar o diagrama ERD como imagem real** no final (para aparecer no GitHub visualmente);  
-ou  
-- 📘 **Gerar o README.md como arquivo** pronto para download.  
-
-Qual prefere?
-```
