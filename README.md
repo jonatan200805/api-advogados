@@ -446,14 +446,6 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 ## 👨‍🏫 Créditos
 
 **Desenvolvido por:** [Jonatan Cordova]
-
-💻 Curso: *Desenvolvimento Back-End com Node.js*.
-
-📚 Projeto baseado em: *Game-API / api-players-express*.
-
-🔗 GitHub:
-```
-https://github.com/jonatan200805
-
-
-
+💻 Curso: *Desenvolvimento Back-End com Node.js*
+📚 Projeto baseado em: *Game-API / api-players-express*
+🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
