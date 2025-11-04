@@ -1,18 +1,13 @@
+// C:\Users\alunolages\Documents\jonatan\advogado\api-advogados\src\routes\advogadoRoutes.js
 const express = require('express');
 const router = express.Router();
 const advogadoController = require('../controllers/advogadoController');
-const validate = require('../middlewares/validateAjv');
-const auth = require('../middlewares/auth');
-const {
-  schemaCriarAdvogado,
-  schemaAtualizarAdvogado,
-} = require('../schemas/advogadoSchemas');
+// const validate = require('../middlewares/validateAjv'); // Se você tiver validação para advogados
+// const { schemaCriarAdvogado, schemaAtualizarAdvogado } = require('../schemas/advogadoSchemas'); // E schemas
 
-// Todas as rotas são protegidas
-router.get('/', auth, advogadoController.listar);
-router.get('/:id', auth, advogadoController.buscarPorId);
-router.post('/', auth, validate(schemaCriarAdvogado), advogadoController.criar);
-router.put('/:id', auth, validate(schemaAtualizarAdvogado), advogadoController.atualizar);
-router.delete('/:id', auth, advogadoController.deletar);
+router.get('/', advogadoController.listar);
+router.post('/', advogadoController.criar); // ou validate(schemaCriarAdvogado)
+router.put('/:id', advogadoController.atualizar); // ou validate(schemaAtualizarAdvogado)
+router.delete('/:id', advogadoController.deletar);
 
 module.exports = router;

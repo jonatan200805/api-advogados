@@ -1,15 +1,8 @@
-const app = require('./app');
-const { sequelize } = require('./models');
+const app = require('./app'); // <--- CORRIGIDO: Agora aponta para 'app.js' na mesma pasta 'src'
 
 const PORT = process.env.PORT || 3000;
-
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('✅ Conexão com o banco de dados estabelecida!');
-    await sequelize.sync(); // Sincroniza modelos
-    app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
-  } catch (err) {
-    console.error('❌ Erro ao iniciar servidor:', err);
-  }
-})();
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Para usuários: http://localhost:${PORT}/api/usuarios`);
+    console.log(`Para advogados: http://localhost:${PORT}/api/advogados`);
+});

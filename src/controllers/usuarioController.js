@@ -1,44 +1,45 @@
-const { Advogado, Processo } = require('../models');
-
-
-exports.listar = async (req, res) => {
-const advs = await Advogado.findAll();
-return res.json(advs);
-};
-
+const { Usuario } = require('../models'); // Assumindo que você tem um modelo Usuario
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.criar = async (req, res) => {
-try {
-const adv = await Advogado.create(req.body);
-return res.status(201).json(adv);
-} catch (err) {
-if (err.name === 'SequelizeUniqueConstraintError') return res.status(400).json({ message: 'OAB já cadastrada' });
-console.error(err);
-return res.status(500).json({ message: 'Erro interno' });
-}
+    try {
+        const { nome, email, senha } = req.body;
+        const hashedPassword = await bcrypt.hash(senha, 10);
+        const user = await Usuario.create({ nome, email, senha: hashedPassword });
+        
+        const userResponse = { ...user.toJSON() };
+        delete userResponse.senha;
+
+        return res.status(201).json(userResponse);
+    } catch (err) {
+        if (err.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({ message: 'Email já cadastrado' });
+        }
+        console.error('Erro ao criar usuário:', err);
+        return res.status(500).json({ message: 'Erro interno do servidor ao criar usuário.' });
+    }
 };
 
+exports.login = async (req, res) => {
+    try {
+        const { email, senha } = req.body;
+        const user = await Usuario.findOne({ where: { email } });
 
-exports.atualizar = async (req, res) => {
-const { id } = req.params;
-const adv = await Advogado.findByPk(id);
-if (!adv) return res.status(404).json({ message: 'Advogado não encontrado' });
-await adv.update(req.body);
-return res.json(adv);
-};
+        if (!user) {
+            return res.status(400).json({ message: 'Email ou senha inválidos.' });
+        }
 
+        const isMatch = await bcrypt.compare(senha, user.senha);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Email ou senha inválidos.' });
+        }
 
-exports.deletar = async (req, res) => {
-const { id } = req.params;
-const adv = await Advogado.findByPk(id);
-if (!adv) return res.status(404).json({ message: 'Advogado não encontrado' });
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-
-// Impedir exclusão se houver processos
-const count = await Processo.count({ where: { id_advogado: id } });
-if (count > 0) return res.status(400).json({ message: 'Não é possível excluir advogado com processos associados' });
-
-
-await adv.destroy();
-return res.json({ message: 'Advogado excluído com sucesso' });
+        return res.json({ message: 'Login realizado com sucesso!', token });
+    } catch (err) {
+        console.error('Erro ao fazer login:', err);
+        return res.status(500).json({ message: 'Erro interno do servidor ao tentar login.' });
+    }
 };
