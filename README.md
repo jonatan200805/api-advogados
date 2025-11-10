@@ -22,15 +22,23 @@ Aplicar conceitos de desenvolvimento **back-end** com:
 ## 📂 Estrutura do Projeto
 
 ```plaintext
-src/
-├── controllers/ → Lógica de negócio
-├── middlewares/ → Autenticação, validação e erros
-├── models/ → Modelos Sequelize (tabelas do banco)
-├── routes/ → Rotas da API
-├── schemas/ → Schemas AJV para validação
-├── swagger.js → Configuração da documentação Swagger
-├── app.js → Configuração principal do Express
-└── server.js → Inicialização do servidor
+api-advogados/
+              ├── node_modules/              # Dependências instaladas pelo npm/yarn
+              ├── src/                       # Código-fonte principal
+              │       ├── controllers/           # Lógica dos endpoints (controladores da aplicação)
+              │       ├── middlewares/           # Intermediários do Express (autenticação, logs, etc.)
+              │       ├── models/                # Modelos de dados (ORM/ODM, ex: Sequelize, Mongoose)
+              │       ├── routes/                # Definição das rotas da API
+              │       ├── schemas/               # Schemas de validação (ex: Joi, Zod, Yup)
+              │       ├── swagger.js             # Configuração da documentação Swagger/OpenAPI
+              │       ├── app.js                 # Criação e configuração da instância do Express
+              │       └── server.js              # Inicialização do servidor (porta, logs, etc.)
+              ├── .env                       # Variáveis de ambiente (configurações sensíveis)
+              ├── .env.example               # Exemplo de estrutura do .env (para outros devs)
+              ├── package-lock.json          # Controle de versões exatas das dependências
+              ├── package.json               # Metadados e scripts do projeto Node.js
+              ├── README.md                  # Documentação do projeto
+              └── sql-diagram.png            # Diagrama visual do banco de dados (DER)
 ````
 
 ---
@@ -452,3 +460,4 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
