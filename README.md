@@ -22,23 +22,43 @@ Aplicar conceitos de desenvolvimento **back-end** com:
 ## 📂 Estrutura do Projeto
 
 ```plaintext
-api-advogados/
-              ├── node_modules/              # Dependências instaladas pelo npm/yarn
-              ├── src/                       # Código-fonte principal
-              │       ├── controllers/           # Lógica dos endpoints (controladores da aplicação)
-              │       ├── middlewares/           # Intermediários do Express (autenticação, logs, etc.)
-              │       ├── models/                # Modelos de dados (ORM/ODM, ex: Sequelize, Mongoose)
-              │       ├── routes/                # Definição das rotas da API
-              │       ├── schemas/               # Schemas de validação (ex: Joi, Zod, Yup)
-              │       ├── swagger.js             # Configuração da documentação Swagger/OpenAPI
-              │       ├── app.js                 # Criação e configuração da instância do Express
-              │       └── server.js              # Inicialização do servidor (porta, logs, etc.)
-              ├── .env                       # Variáveis de ambiente (configurações sensíveis)
-              ├── .env.example               # Exemplo de estrutura do .env (para outros devs)
-              ├── package-lock.json          # Controle de versões exatas das dependências
-              ├── package.json               # Metadados e scripts do projeto Node.js
-              ├── README.md                  # Documentação do projeto
-              └── sql-diagram.png            # Diagrama visual do banco de dados (DER)
+api-advogados/                                 # Ponto de partida do projeto
+├── node_modules/                              # Dependências instaladas pelo npm/yarn
+├── src/                                       # Código-fonte principal
+│   ├── config/                                # Configurações da aplicação
+│   │          └── database.js                 # Conexão com o banco de dados (Sequelize/Mongoose)
+│   ├── controllers/                           # Lógica dos endpoints
+│   │               ├── advogadoController.js  # CRUD de advogados
+│   │               ├── processoController.js  # CRUD de processos
+│   │               └── usuarioController.js   # Cadastro e login de usuários
+│   ├── middlewares/                           # Intermediários do Express
+│   │               ├── auth.js                # Validação de JWT (autenticação)
+│   │               ├── errorHandler.js        # Tratamento global de erros
+│   │               └── validateAjv.js         # Validação de dados usando schemas AJV
+│   ├── models/                                # Modelos de dados (ORM/ODM)
+│   │          ├── advogado.js                 # Model de advogados (nome, OAB, email)
+│   │          ├── index.js                    # Importa e exporta todos os models
+│   │          ├── processo.js                 # Model de processos (número, cliente, status)
+│   │          └── usuario.js                  # Model de usuários (nome, email, senha)
+│   ├── routes/                                # Definição das rotas da API
+│   │          ├── advogadoRoutes.js           # Rotas de advogados
+│   │          ├── processoRoutes.js           # Rotas de processos
+│   │          └── usuarioRoutes.js            # Rotas de usuários
+│   ├── schemas/                               # Schemas de validação de dados
+│   │           ├── advogadoSchemas.js         # Valida advogados (nome, OAB, email)
+│   │           ├── processoSchemas.js         # Valida processos (número, cliente, status)
+│   │           └── usuarioSchemas.js          # Valida usuários (cadastro/login)
+│   ├── app.js                                 # Configuração do Express (middlewares, rotas)
+│   ├── index.js                               # Ponto de entrada da aplicação
+│   ├── server.js                              # Inicializa servidor (porta, logs)
+│   └── swagger.js                             # Configuração da documentação Swagger/OpenAPI
+├── .env                                       # Variáveis de ambiente (sensíveis)
+├── .env.example                               # Exemplo de variáveis de ambiente
+├── package-lock.json                          # Controle de versões das dependências
+├── package.json                               # Metadados e scripts do projeto
+├── README.md                                  # Este arquivo de documentação
+└── sql-diagram.png                            # Diagrama visual do banco de dados (DER)
+
 ````
 
 ---
@@ -460,4 +480,5 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
 
