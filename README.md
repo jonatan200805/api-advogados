@@ -36,10 +36,10 @@ api-advogados/                                               # Ponto de partida 
               │   │               ├── errorHandler.js        # Tratamento global de erros
               │   │               └── validateAjv.js         # Validação de dados usando schemas AJV
               │   ├── models/                                # Modelos de dados (ORM/ODM)
-              │   │           ├── advogado.js                # Model de advogados (nome, OAB, email)
-              │   │           ├── index.js                   # Importa e exporta todos os models
-              │   │           ├── processo.js                # Model de processos (número, cliente, status)
-              │   │           └── usuario.js                 # Model de usuários (nome, email, senha)
+              │   │          ├── advogado.js                 # Model de advogados (nome, OAB, email)
+              │   │          ├── index.js                    # Importa e exporta todos os models
+              │   │          ├── processo.js                 # Model de processos (número, cliente, status)
+              │   │          └── usuario.js                  # Model de usuários (nome, email, senha)
               │   ├── routes/                                # Definição das rotas da API
               │   │          ├── advogadoRoutes.js           # Rotas de advogados
               │   │          ├── processoRoutes.js           # Rotas de processos
@@ -480,6 +480,7 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
 
 
 
