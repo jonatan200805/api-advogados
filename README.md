@@ -614,7 +614,19 @@ Se faltar algum campo obrigatório (por exemplo, esquecer o `email` do advogado)
 *Verifique no **MySQL** (banco `advogados_db`) se os registros estão sendo criados corretamente nas tabelas `usuarios`, `advogados` e `processos`.
 
 ---
+✅ MÉTODO 1 — Deletar tabelas ignorando as FKs (mais fácil)
+SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS processo;
+DROP TABLE IF EXISTS advogado;
+DROP TABLE IF EXISTS usuario;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+✔ Funciona mesmo se houver relacionamentos
+✔ Evita erros como: “Cannot drop table because it is referenced by a foreign key constraint”
+---
 ## 🧠 Tecnologias utilizadas
 
 *🟢 Node.js
@@ -692,4 +704,5 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
 
