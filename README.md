@@ -219,7 +219,69 @@ Authorization: Bearer SEU_TOKEN_AQUI
 |  POST  | `/advogados/:id_advogado/processos` | Cria novo processo             |
 
 ---
+✅ 1. Criar o Banco de Dados
+CREATE DATABASE sistema_advogados;
+USE sistema_advogados;
 
+✅ 2. Criar tabela usuario
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
+);
+
+✅ 3. Criar tabela advogado
+
+(Um usuário pode ter vários advogados → relação 1:N)
+
+CREATE TABLE advogado (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    oab VARCHAR(50) NOT NULL UNIQUE,
+    especialidade VARCHAR(255),
+    
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);
+
+✅ 4. Criar tabela processo
+
+(Um advogado pode ter vários processos → 1:N)
+
+CREATE TABLE processo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero_processo VARCHAR(100) NOT NULL UNIQUE,
+    descricao TEXT,
+    status VARCHAR(100),
+
+    id_advogado INT NOT NULL,
+    FOREIGN KEY (id_advogado) REFERENCES advogado(id)
+);
+
+🎯 Pronto: Diagrama criado exatamente como o seu.
+✔ Tabela usuario
+✔ Tabela advogado com FK → usuario.id
+✔ Tabela processo com FK → advogado.id
+✔ Campos UNIQUE (email, oab, numero_processo)
+✔ Relacionamento 1:N exatamente como no modelo
+📌 (OPCIONAL) Inserir dados de exemplo
+
+Se quiser testar o banco:
+
+Inserir usuário
+INSERT INTO usuario (nome, email, senha)
+VALUES ('João Silva', 'joao@email.com', '1234');
+
+Inserir advogado vinculado ao usuário
+INSERT INTO advogado (nome, oab, especialidade, id_usuario)
+VALUES ('Maria Souza', '12345-OAB', 'Direito Civil', 1);
+
+Inserir processo vinculado ao advogado
+INSERT INTO processo (numero_processo, descricao, status, id_advogado)
+VALUES ('PROC-2025-0001', 'Processo civil sobre contrato', 'Em andamento', 1);
+
+---
 ## 🚀 Passo a passo — Testando TODAS as rotas POST
 
 ### 🧩 1️⃣ Criar Usuário
@@ -480,6 +542,7 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
 
 
 
