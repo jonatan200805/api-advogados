@@ -614,7 +614,22 @@ Se faltar algum campo obrigatório (por exemplo, esquecer o `email` do advogado)
 *Verifique no **MySQL** (banco `advogados_db`) se os registros estão sendo criados corretamente nas tabelas `usuarios`, `advogados` e `processos`.
 
 ---
-✅ MÉTODO 1 — Deletar tabelas ignorando as FKs (mais fácil)
+
+# 🗑️ **Como deletar todas as tabelas no MySQL (com segurança)**
+
+Existem duas formas de excluir todas as tabelas do banco:
+✔ ignorando as chaves estrangeiras (mais fácil)
+✔ seguindo a ordem de dependência (manual)
+
+A forma mais prática é **desativar temporariamente a verificação de chaves estrangeiras**.
+
+---
+
+## ✅ **Método 1 — Deletar tabelas ignorando as Foreign Keys (recomendado)**
+
+Use quando quiser apagar tudo sem receber erro de relacionamento.
+
+```sql
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS processo;
@@ -622,11 +637,33 @@ DROP TABLE IF EXISTS advogado;
 DROP TABLE IF EXISTS usuario;
 
 SET FOREIGN_KEY_CHECKS = 1;
+```
 
+### ✔ Benefícios
 
-✔ Funciona mesmo se houver relacionamentos
-✔ Evita erros como: “Cannot drop table because it is referenced by a foreign key constraint”
+* Evita erros como:
+  **"Cannot drop table because it is referenced by a foreign key constraint"**
+* Permite apagar as tabelas em qualquer ordem
+* Útil para reiniciar o banco rapidamente
+
 ---
+
+## 🔄 **Método 2 — Deletar tabelas na ordem correta**
+
+Se quiser manter a verificação de FK ligada, siga a ordem de dependência:
+
+1. `processo` (depende de advogado)
+2. `advogado` (depende de usuario)
+3. `usuario`
+
+```sql
+DROP TABLE processo;
+DROP TABLE advogado;
+DROP TABLE usuario;
+```
+
+---
+
 ## 🧠 Tecnologias utilizadas
 
 *🟢 Node.js
@@ -704,5 +741,6 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
 
 
