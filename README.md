@@ -146,10 +146,6 @@ Se tudo estiver certo, você verá no terminal:
 
 ---
 
-Aqui está um **README.md completo**, organizado, bonito e pronto para usar no seu projeto de API de Advogados com MySQL + Node.js (Sequelize).
-Se quiser, posso adaptar para outro estilo ou adicionar badges, instruções de deploy, etc.
-
----
 **Sistema de Gerenciamento de Advogados e Processos**
 *API em Node.js + Express + Sequelize + MySQL*
 
@@ -696,3 +692,4 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
