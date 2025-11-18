@@ -146,6 +146,222 @@ Se tudo estiver certo, você verá no terminal:
 
 ---
 
+Aqui está um **README.md completo**, organizado, bonito e pronto para usar no seu projeto de API de Advogados com MySQL + Node.js (Sequelize).
+Se quiser, posso adaptar para outro estilo ou adicionar badges, instruções de deploy, etc.
+
+---
+**Sistema de Gerenciamento de Advogados e Processos**
+*API em Node.js + Express + Sequelize + MySQL*
+
+---
+
+## 📖 **Descrição do Projeto**
+
+Este projeto implementa um sistema de gerenciamento de **usuários**, **advogados** e **processos jurídicos**, permitindo cadastro, visualização e relacionamento entre eles.
+
+A API segue uma arquitetura simples, organizada e baseada em boas práticas REST.
+
+---
+
+## 🧱 **Modelo Relacional do Banco de Dados**
+
+```.
+usuario (1) ---- (N) advogado (1) ---- (N) processo
+```
+
+### **usuario**
+
+*id (PK)
+*nome
+*email (UNIQUE)
+*senha
+
+### **advogado**
+
+*id (PK)
+*nome
+*oab (UNIQUE)
+*especialidade
+*id_usuario (FK → usuario.id)
+
+### **processo**
+
+*id (PK)
+*numero_processo (UNIQUE)
+*descricao
+*status
+*id_advogado (FK → advogado.id)
+
+---
+
+## 🛠 **Criação do Banco de Dados no MySQL**
+
+### **Criar Banco**
+
+```sql
+CREATE DATABASE sistema_advogados;
+USE sistema_advogados;
+```
+
+---
+
+## 🗄 **Criação das Tabelas**
+
+### **Tabela: usuario**
+
+```sql
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
+);
+```
+
+### **Tabela: advogado**
+
+```sql
+CREATE TABLE advogado (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    oab VARCHAR(50) NOT NULL UNIQUE,
+    especialidade VARCHAR(255),
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);
+```
+
+### **Tabela: processo**
+
+```sql
+CREATE TABLE processo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero_processo VARCHAR(100) NOT NULL UNIQUE,
+    descricao TEXT,
+    status VARCHAR(100),
+    id_advogado INT NOT NULL,
+    FOREIGN KEY (id_advogado) REFERENCES advogado(id)
+);
+```
+
+---
+
+## 🧹 **Como Deletar Todas as Tabelas**
+
+### Opção fácil (desativa FKs)
+
+```sql
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS processo;
+DROP TABLE IF EXISTS advogado;
+DROP TABLE IF EXISTS usuario;
+
+SET FOREIGN_KEY_CHECKS = 1;
+```
+
+Ou deletar na ordem correta:
+
+```sql
+DROP TABLE processo;
+DROP TABLE advogado;
+DROP TABLE usuario;
+```
+
+---
+
+## 📝 **Inserts de Teste**
+
+### Usuário
+
+```sql
+INSERT INTO usuario (nome, email, senha)
+VALUES ('João Silva', 'joao@email.com', '1234');
+```
+
+### Advogado
+
+```sql
+INSERT INTO advogado (nome, oab, especialidade, id_usuario)
+VALUES ('Maria Souza', '12345-OAB', 'Direito Civil', 1);
+```
+
+### Processo
+
+```sql
+INSERT INTO processo (numero_processo, descricao, status, id_advogado)
+VALUES ('PROC-2025-0001', 'Processo sobre contrato', 'Em andamento', 1);
+```
+
+## 📦 **Tecnologias Utilizadas**
+
+*Node.js
+*Express
+*MySQL
+*Sequelize ORM
+*Dotenv
+*Nodemon
+
+---
+
+## ▶ **Como Rodar o Projeto**
+
+### **1. Instalar dependências**
+
+```bash
+npm install
+```
+
+### **2. Criar arquivo `.env`**
+
+```.
+DB_NAME=sistema_advogados
+DB_USER=root
+DB_PASS=SUASENHA
+DB_HOST=localhost
+DB_DIALECT=mysql
+```
+
+### **3. Rodar o servidor**
+
+```bash
+npm run dev
+```
+
+---
+
+## 🔗 **Rotas (Exemplos)**
+
+### **Usuário**
+
+| Método | Rota     | Descrição      |
+| ------ | -------- | -------------- |
+| POST   | /usuario | Cria usuário   |
+| GET    | /usuario | Lista usuários |
+
+### **Advogado**
+
+| Método | Rota      | Descrição       |
+| ------ | --------- | --------------- |
+| POST   | /advogado | Cria advogado   |
+| GET    | /advogado | Lista advogados |
+
+### **Processo**
+
+| Método | Rota      | Descrição       |
+| ------ | --------- | --------------- |
+| POST   | /processo | Cria processo   |
+| GET    | /processo | Lista processos |
+
+---
+
+## ✔ **Status do Projeto**
+
+🚧 Em desenvolvimento
+📘 Aceitando melhorias
+
+---
+
 ### 📘 6️⃣ Acessar a documentação (Swagger)
 
 Abra o navegador e entre em:
@@ -219,69 +435,7 @@ Authorization: Bearer SEU_TOKEN_AQUI
 |  POST  | `/advogados/:id_advogado/processos` | Cria novo processo             |
 
 ---
-✅ 1. Criar o Banco de Dados
-CREATE DATABASE sistema_advogados;
-USE sistema_advogados;
 
-✅ 2. Criar tabela usuario
-CREATE TABLE usuario (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL
-);
-
-✅ 3. Criar tabela advogado
-
-(Um usuário pode ter vários advogados → relação 1:N)
-
-CREATE TABLE advogado (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    oab VARCHAR(50) NOT NULL UNIQUE,
-    especialidade VARCHAR(255),
-    
-    id_usuario INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
-);
-
-✅ 4. Criar tabela processo
-
-(Um advogado pode ter vários processos → 1:N)
-
-CREATE TABLE processo (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    numero_processo VARCHAR(100) NOT NULL UNIQUE,
-    descricao TEXT,
-    status VARCHAR(100),
-
-    id_advogado INT NOT NULL,
-    FOREIGN KEY (id_advogado) REFERENCES advogado(id)
-);
-
-🎯 Pronto: Diagrama criado exatamente como o seu.
-✔ Tabela usuario
-✔ Tabela advogado com FK → usuario.id
-✔ Tabela processo com FK → advogado.id
-✔ Campos UNIQUE (email, oab, numero_processo)
-✔ Relacionamento 1:N exatamente como no modelo
-📌 (OPCIONAL) Inserir dados de exemplo
-
-Se quiser testar o banco:
-
-Inserir usuário
-INSERT INTO usuario (nome, email, senha)
-VALUES ('João Silva', 'joao@email.com', '1234');
-
-Inserir advogado vinculado ao usuário
-INSERT INTO advogado (nome, oab, especialidade, id_usuario)
-VALUES ('Maria Souza', '12345-OAB', 'Direito Civil', 1);
-
-Inserir processo vinculado ao advogado
-INSERT INTO processo (numero_processo, descricao, status, id_advogado)
-VALUES ('PROC-2025-0001', 'Processo civil sobre contrato', 'Em andamento', 1);
-
----
 ## 🚀 Passo a passo — Testando TODAS as rotas POST
 
 ### 🧩 1️⃣ Criar Usuário
@@ -542,9 +696,3 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
-
-
-
-
-
-
