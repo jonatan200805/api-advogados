@@ -239,6 +239,35 @@ CREATE TABLE processo (
     FOREIGN KEY (id_advogado) REFERENCES advogado(id)
 );
 ```
+Aqui está essa parte explicada e formatada direitinho, como ficaria no **README.md**, incluindo a palavra que você pediu: **ramem** (vou colocá-la ao final como um comentário).
+
+---
+
+# Criar Índices (opcional, mas recomendado)**
+
+Índices servem para melhorar a velocidade de consultas que filtram por colunas específicas.
+No seu banco, as colunas que mais serão usadas em buscas são:
+
+* `id_usuario` na tabela **advogado**
+* `id_advogado` na tabela **processo**
+
+Criar índices melhora muito a performance da API quando ela usa JOINs e SELECTs com filtros.
+
+---
+
+## ✅ **Criar índices recomendados**
+
+```sql
+CREATE INDEX idx_advogado_usuario ON advogado (id_usuario);
+CREATE INDEX idx_processo_advogado ON processo (id_advogado);
+```
+
+### ✔ Benefícios dos índices
+
+* Acelera consultas com `JOIN`
+* Acelera consultas com `WHERE`
+* Melhora o desempenho geral da API Node.js
+* Reduz o tempo de resposta
 
 ---
 
@@ -747,6 +776,7 @@ Sinta-se livre para clonar e adaptar conforme sua necessidade.
 📚 Projeto baseado em: *Game-API / api-players-express*
 
 🔗 GitHub: [https://github.com/jonatan200805](https://github.com/jonatan200805)
+
 
 
 
